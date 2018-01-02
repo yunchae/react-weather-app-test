@@ -22,37 +22,21 @@ class ZipForm extends Component {
     }
 
     submitZipCode(e) {
-        e.preventDefault();
-
-        console.log('this.state', this.state);
-
-        const {zipcode} = this.state;
-        const {onSubmit} = this.props;
-
-        onSubmit(zipcode);
-
-        this.state = {
-            zipcode: '',
-            city: {},
-            dates: [],
-            selectedDate: null
-        };
+        const {onSubmit} = this.props
+        onSubmit(e.target.value);
     }
 
     render() {
         return (
             <div className="zip-form">
-                <form onSubmit={this.submitZipCode}>
-                    <label htmlFor="zipcode">Zip Code</label>
-                    <input
-                        className="form-control"
-                        type="input"
-                        name="zipcode"
-                        value={this.state.zipcode}
-                    onInput={this.inputUpdated}>
-                    </input>
-                    <button type="submit" className="btn btn-success">Get the forecast!!</button>
-                </form>
+                <label htmlFor="zipcode"> Zip Code </label>
+                <select onChange={this.submitZipCode}>
+                    <option value=""> Select a zip</option>
+                    {this.props.zips.map(zip =>
+                        <option key={zip} value={zip}>{zip}</option>
+                    )}
+                </select>
+                {/*<button type="submit" className="btn btn-success">Get the forecast!!</button>*/}
             </div>
         );
     }
